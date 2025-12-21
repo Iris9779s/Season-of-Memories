@@ -1,0 +1,409 @@
+:root {
+    --gold: #f1c40f; 
+    --light-gold: #FFD700; 
+    --sparkle-color: #FFFFE0; 
+    --red: #c0392b; 
+    --light-red: #FF6347;
+    --green: #27ae60;
+    --bg-color-dark: #2c3e50;  
+    --black: #000000; 
+} 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sniglet', cursive; }
+
+/* Background 1 (Màn hình hộp quà) */
+body {
+    background-color: var(--bg-color-dark);
+    background-image: 
+        linear-gradient(rgba(44, 62, 80, 0.2), rgba(44, 62, 80, 0.2)), 
+        url('https://i.imgur.com/BU1Piu8.jpeg');
+        
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; 
+
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-image 1s ease-in-out; 
+}
+
+/* Background 2 (Màn hình cây thông) */
+body.bg-active {
+    background-image: 
+        linear-gradient(rgba(44, 62, 80, 0.2), rgba(44, 62, 80, 0.2)),
+        url('https://i.imgur.com/3YnszDV.jpeg');
+    background-size: cover;
+}
+#content-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1400px;
+    height: 900px;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    z-index: 1;
+    
+    /* --- THÊM CÁC DÒNG DƯỚI ĐÂY ĐỂ NHẸ MÁY --- */
+    will-change: transform;
+    contain: layout size style; 
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+/* Cài đặt chung cho các màn hình */
+.screen {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    z-index: 100; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+.screen.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+
+/* Hộp quà ban đầu */
+#present-screen { 
+    justify-content: center;
+    z-index: 200; /* Tăng Z-index để đảm bảo click được */
+}
+.box-wrapper { 
+    margin-top: 25vh; 
+    text-align: center; 
+    z-index: 210; 
+}
+.present-box {  
+    width: 250px; 
+    height: 250px; 
+    cursor: pointer; 
+    background: url('https://i.imgur.com/yCrbNeH.png') no-repeat center/contain; 
+    animation: pulse 1.5s infinite; 
+    z-index: 220; /* Tăng Z-index cho nút click */
+}
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+.click-hint { color: white; font-weight: bold; margin-top: 20px; font-size: 1.5em; text-shadow: 2px 2px 5px black; }
+
+/* Tiêu đề & Cây thông (ĐÃ CHỈNH SỬA VỊ TRÍ) */
+.main-header { 
+    position: absolute; 
+    bottom: 5px; /* Đặt sát mép dưới */
+    left: 50%; 
+    transform: translateX(-50%); 
+    text-align: center; 
+    width: 100%; 
+    margin-top: 0; 
+    z-index: 120; /* Đảm bảo nằm trên #snow-base (40) */
+    padding-bottom: 0; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-titles {
+    transition: opacity 0.5s, visibility 0.5s, height 0.5s;
+    height: auto;
+}
+#main-titles.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0; /* Giúp đẩy nút Mini Game lên vị trí cũ */
+    overflow: hidden;
+}
+
+.title-gold { 
+    color: var(--gold); 
+    font-size: 3.5em; 
+    text-shadow: none; 
+    animation: none; 
+}
+
+.subtitle-white { 
+    color: var(--black); 
+    font-size: 1.6em; 
+    text-shadow: none; 
+    animation: none; 
+}
+
+/* Style cho nút Mini Game */
+#mini-game-button {
+    text-decoration: none; /* Loại bỏ gạch chân mặc định của thẻ <a> */
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: var(--red); /* Màu nền đỏ nổi bật */
+    box-shadow: 0 0 15px var(--red), 0 0 30px var(--light-red);
+    transition: all 0.3s ease-in-out;
+}
+
+#mini-game-button:hover {
+    transform: scale(1.05);
+    background-color: var(--light-red);
+    box-shadow: 0 0 20px var(--light-red), 0 0 40px var(--sparkle-color);
+}
+
+.mini-game-title {
+    font-size: 2.5em; /* Kích thước chữ nhỏ hơn tiêu đề chính một chút */
+    color: white !important; /* Đảm bảo chữ trắng */
+    text-shadow: 2px 2px 5px var(--black);
+    margin: 0;
+    padding: 0;
+}
+
+
+/* KEYFRAMES CHO HIỆU ỨNG LẤP LÁNH */
+@keyframes sparkle {
+    0% {
+        text-shadow: 0 0 2px var(--light-gold), 0 0 4px rgba(255, 255, 224, 0.5); 
+    }
+    50% {
+        text-shadow: 0 0 7px var(--light-gold), 0 0 12px var(--sparkle-color), 0 0 15px rgba(255, 255, 255, 0.7);
+    }
+    100% {
+        text-shadow: 0 0 3px var(--light-gold), 0 0 6px rgba(255, 255, 224, 0.7); 
+    }
+}
+/* Nút điều khiển âm nhạc  */
+#music-control {
+    position: fixed;
+    top: 40px; /* Hạ thấp xuống một chút */
+    left: 40px; /
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-size: 28px;
+    user-select: none;
+    ;
+}
+
+#music-control:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Hiệu ứng khi nhạc đang tắt */
+#music-control.muted {
+    opacity: 0.6;
+    border-color: #ccc;
+}
+
+/* CONTAINER CÂY THÔNG */
+.container-tree { 
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-end; 
+    width: 100%; 
+    position: relative;
+    height: 100%; 
+    min-height: 500px;
+}
+
+.tree-relative { 
+    position: relative; 
+    height: 100%; 
+    width: auto; 
+    max-width: 90%; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; 
+    margin-top: 0; 
+    padding-bottom: 0;
+    z-index: 50; 
+}
+.base-tree { height: 100%; width: auto; display: block; }
+.decoration-container { position: absolute; width: 100%; height: 100%; }
+
+/* Trang trí Cây (Ornaments) */
+.decoration {
+    position: absolute; cursor: pointer;
+    transform: translate(-50%, -50%); 
+    z-index: 150; 
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.3s ease; 
+    animation: led-glow 1s infinite alternate; 
+}
+@keyframes led-glow { from { filter: brightness(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4)); } to { filter: brightness(1.7) drop-shadow(0 0 10px white); } }
+
+/* Hình dạng trang trí */
+.ornament { 
+    width: 25px; 
+    height: 25px; 
+    border-radius: 50%; 
+} 
+/* Màu ban đầu cho hình tròn */
+.ornament.gold { background-color: var(--gold); }
+.ornament.red { background-color: var(--red); }
+.ornament.green { background-color: var(--green); }
+
+.star { width: 35px; height: 35px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.ribbon { width: 40px; height: 40px; background-image: url('https://i.imgur.com/QHzoEqn.png');}
+.bell { width: 35px; height: 40px; background-image: url('https://i.imgur.com/yJosAzL.png');}
+.candy { width: 30px; height: 45px; background-image: url('https://i.imgur.com/tcEakZ8.png');}
+.star.top-star { 
+    width: 80px; height: 80px; 
+    font-size: 0; 
+    display: flex; align-items: center; justify-content: center; z-index: 100; color: #333; 
+    top: 5%; background-color: var(--gold);
+}
+
+/* HIỆU ỨNG ĐÃ ĐỌC */
+.decoration.read { animation: none !important; filter: none !important;}
+
+/* QUẢ CHÂU CHUYỂN MÀU 100% TRẮNG SAU KHI ĐỌC */
+.ornament.read { 
+    background-color: white !important; 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); 
+    opacity: 1;
+} 
+.ribbon.read, .bell.read, .candy.read, .star.read {
+    filter: grayscale(100%) brightness(150%);
+    opacity: 0.7;
+} 
+
+/* NỀN TUYẾT TRẮNG DƯỚI CÂY */
+#snow-base {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%; 
+    height: 150px; 
+    background-color: white;
+    z-index: 40; 
+    box-shadow: 0 -5px 20px rgba(255, 255, 255, 0.8);
+    opacity: 1.0; 
+    border-top-left-radius: 50% 50%; 
+    border-top-right-radius: 50% 50%; 
+    border-bottom-left-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+}
+
+/* GẤU THỎ & SNOWMAN */
+#snowman {
+    position: absolute; 
+    bottom: 50px; 
+    left: 35%; 
+    transform: translateX(-50%); 
+    width: 180px; 
+    height: 180px; 
+    background: url('https://i.imgur.com/ujKi7C0.png') no-repeat center/contain;
+    z-index: 55; 
+    opacity: 0; 
+    transition: opacity 1s ease-in-out;
+}
+#rabbit-bear {
+    position: absolute; 
+    bottom: 50px; 
+    right: 35%; 
+    transform: translateX(50%);
+    width: 180px; 
+    height: 180px; 
+    background: url('https://i.imgur.com/xh5rHli.png') no-repeat center/contain;
+    z-index: 55; 
+    opacity: 0; 
+    transition: opacity 1s ease-in-out;
+}
+#tree-screen.active #snowman, #tree-screen.active #rabbit-bear { opacity: 1; }
+
+/* Khung trắng chính (Modal) */
+.white-box {
+    display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: white; border-radius: 15px; padding: 20px; 
+    z-index: 999; 
+    box-shadow: 0 0 40px rgba(0,0,0,0.5); text-align: center;
+    width: auto; max-width: 90%; min-width: 250px; 
+    max-height: 80vh; 
+    overflow-y: auto; /* ĐÃ CẬP NHẬT: Tự động thêm thanh cuộn khi nội dung quá dài */
+}
+
+/* Điều chỉnh kích thước khung trắng */
+.white-box.wide { width: 500px; } 
+.white-box.medium { width: 400px; } 
+.white-box.small { width: 350px; } 
+.close-btn { position: absolute; right: 10px; top: 5px; font-size: 26px; cursor: pointer; color: #bbb; z-index: 10; }
+#media-area img { 
+    max-width: 100%; 
+    max-height: 40vh; 
+    border-radius: 10px; 
+    display: block; 
+    margin: 0 auto; 
+    object-fit: contain; 
+} 
+#media-area iframe { width: 320px; height: 180px; border-radius: 10px; margin: 0 auto; display: block;} 
+#sender-info { color: var(--green); margin-bottom: 5px; font-size: 1.2em; }
+#msg-content { color: #333; line-height: 1.4; font-size: 1.05em; white-space: pre-wrap; }
+.v-label { font-weight: bold; display: block; color: var(--red); margin-bottom: 5px; } 
+
+
+
+/* Hiệu ứng tuyết rơi - ĐÃ TỐI ƯU SIÊU NHẸ */
+#snow-layer { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 10; 
+    /* Giúp trình duyệt hiểu đây là một lớp riêng biệt */
+    contain: strict; 
+}
+
+.snowflake { 
+    color: white; 
+    font-size: 1em; 
+    position: absolute; 
+    top: -10px; 
+    animation: fall linear infinite; 
+    opacity: 0.8; 
+    
+    /* QUAN TRỌNG: Bỏ text-shadow vì nó ngốn RAM rất nặng khi zoom */
+    text-shadow: none; 
+    
+    /* Ép sử dụng GPU để xử lý chuyển động mượt hơn */
+    will-change: transform; 
+    transform: translateZ(0); 
+}
+@keyframes fall { to { transform: translateY(100vh); } }
+/* Tìm đoạn này ở gần cuối file */
+#sender-info { 
+    color: var(--green); 
+    margin-bottom: 5px; 
+    font-size: 1.2em; 
+/* Tìm và thay thế đoạn này */
+#sender-info { 
+    color: var(--green); 
+    margin-bottom: 10px; 
+    font-size: 1.2em; 
+    font-weight: bold;
+    /* Thêm các dòng dưới đây */
+    text-align: center; 
+    width: 100%; 
+    display: block; 
+}
+
+#msg-content { 
+    color: #333; 
+    line-height: 1.6; 
+    font-size: 1.05em; 
+    white-space: pre-wrap; 
+    /* Thay đổi text-align sang center */
+    text-align: center; 
+    width: 100%;
+}

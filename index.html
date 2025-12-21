@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>9779s Season of Memories </title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>9779sVNFC - Season of Memories</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css"> 
+</head>
+<body>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="Santa doesnt know you like i do.mp3" type="audio/mp3">
+    </audio>
+
+    <div id="music-control" onclick="toggleMusic()">
+        <span id="music-icon">🔊</span>
+    </div>
+
+    <div id="snow-layer"></div>
+
+    <div id="content-wrapper">
+
+        <div id="present-screen" class="screen active">
+            <div class="box-wrapper">
+                <div class="present-box" onclick="revealTree()"></div>
+                <div class="click-hint">click this to open the gift</div>
+            </div>
+        </div>
+
+        <div id="tree-screen" class="screen">
+            <div class="container-tree">
+                <div class="tree-relative">
+                    <img class="base-tree" src="https://i.imgur.com/fgaE1oD.png" alt="Christmas Tree">
+                    <div id="decor-layer" class="decoration-container"></div>
+                </div>
+            </div>
+            
+            <div id="snow-base"></div>
+            <div id="snowman"></div>
+            <div id="rabbit-bear"></div>
+            
+            <header class="main-header">
+                <div id="main-titles">
+                    <h1 class="title-gold">Season of Memories</h1> 
+                    <p class="subtitle-white">From 9779s VNFC to KJJK</p> 
+                </div>
+                <a id="mini-game-button" href="https://italino.vn/mini_game/" target="_blank" style="display: none;">
+                    <h1 class="title-gold mini-game-title">Mini Game</h1>
+                </a>
+            </header>
+        </div>
+
+        <div id="info-frame" class="white-box">
+            <span class="close-btn" onclick="closeFrame()">&times;</span>
+            <div id="sender-info"></div>
+            <div id="media-area"></div>
+            <p id="msg-content"></p>
+        </div>
+        
+    </div>
+
+    <script src="./script.js"></script>
+
+</body>
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
