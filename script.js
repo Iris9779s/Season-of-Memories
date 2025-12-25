@@ -80,7 +80,8 @@ const decorImgs = [
 
   "fanpicture14.jpg",
 
-  "fanpicture15.jpg"
+  "fanpicture15.jpg",
+  "fanpicture16.jpg"
 
 ];
 
